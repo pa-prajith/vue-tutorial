@@ -1,4 +1,6 @@
-# vue-twitter
+# vue-tutorial
+
+Trying VUE ...!
 
 ## Project setup
 ```
