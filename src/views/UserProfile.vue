@@ -1,7 +1,7 @@
 <template>
 <div class="user-profile">
     <div class="user-profile__user-panel">
-        <h1 class="user-profile__username">@{{state.user.userName}}</h1>
+        <h1 class="user-profile__username">@{{state.user.username}}</h1>
         <div class="user-profile__admin-badge" v-if="state.user.isAdmin">Admin</div>
         <div class="user-profile__follower-count">
             <strong>Followers:</strong>{{state.followers}}
@@ -9,16 +9,18 @@
         <CreateTwoot @addtwoot="createTwoot"/>
     </div>
     <div class="user-profile__twoot-wrapper">
-        <TwootItem v-for="twoot in state.user.twoots" :key="twoot.id" :username="state.user.userName" :twoot="twoot" @favorite="toggleFavorite"/>
+        <TwootItem v-for="twoot in state.user.twoots" :key="twoot.id" :username="state.user.username" :twoot="twoot" @favorite="toggleFavorite"/>
     </div>
 </div>
 </template>
 
 <script>
 
-import TwootItem from './TwootItem';
-import CreateTwoot from './CreateTwoot';
+import TwootItem from './../components/TwootItem';
+import CreateTwoot from './../components/CreateTwoot';
 import {reactive, computed} from 'vue';
+import {useRoute} from 'vue-router';
+import {users} from './../assets/Users';
 
 export default {
   name: 'UserProfile',
@@ -28,34 +30,15 @@ export default {
   },
 
   setup() {
+    const route = useRoute();
+    const userId = computed(() => route.params.userId);
 
     const state = reactive({
       followers: 0,
-      user: {
-        id: 1,
-        firstName: 'Fname',
-        lastName: 'Lname',
-        email: 'fname@email.com',
-        userName: '_fname.lname',
-        isAdmin: true,
-        twoots: [
-            {
-                id: 1,
-                content: 'This is the first tweet'
-            },
-            {
-                id: 2,
-                content: 'This is the second twoot and it has more chars'
-             }
-        ]
-      }
+      user: users[userId.value] || users[0]
     });
 
-    const fullName = computed(() => `${state.user.firstName} ${state.user.lastName}`);
-      
-    // const fllowUser = () => {
-    //     state.followers++;
-    // };
+    const fullName = computed(() => `${state.user.firstname} ${state.user.lastname}`);
 
     const toggleFavorite = (id) => {
        console.log(`User click toggle favorite ${id}`);
@@ -70,23 +53,11 @@ export default {
     return {
       state,
       fullName,
-   //   followUser,
       toggleFavorite,
       createTwoot
     };
   },
 
-
-  //  mounted() {
-  //    state.followUser();
-  //  },
-  //  watch: {
-  //    followers(newFollowerCount, oldFollowerCount) {
-  //      if(oldFollowerCount < newFollowerCount) {
-  //        console.log(`${state.user.userName} has gained a follower!`);
-  //     }
-  //    }
-  //  }
 
 }
 </script>

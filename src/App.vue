@@ -1,18 +1,17 @@
 <template>
 <div id="main">
-  <UserProfile />
+  <nav>
+    <h1><router-link :to="{name:'Home'}">Twoot</router-link></h1>
+  </nav>
+  <router-view/>
 </div>
 </template> 
 
-
+"
 <script>
-import UserProfile from './components/UserProfile';
 
 export default {
   name: 'App',
-  components: {
-    UserProfile
-  } 
 }
 </script>
 
@@ -23,6 +22,25 @@ export default {
   -moz-osx-font-smoothing: grayscale;
 
   color: #2c3e50;
-  margin-top: 60px;
+
+}
+
+nav {
+  margin-top: 0;
+  width: 100%;
+  height: 100px;
+  background: lightskyblue;
+  color: white;
+  margin-bottom: 60px;
+}
+
+nav h1 {
+  padding-top: 30px;
+  padding-left: 20px;
+}
+
+nav h1 a  {
+  color: inherit;
+  text-decoration: none;
 }
 </style>
