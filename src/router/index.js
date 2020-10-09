@@ -33,9 +33,9 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
-  const user = Store.state.user;
+  const user = Store.state.User.user;
   if(!user) {
-    await Store.dispatch('setUser', users[0]);
+    await Store.dispatch('User/setUser', users[0]);
   }
   const isAdmin = false;
   const requireAdmin = to.matched.some(record => record.meta.requiresAdmin);
