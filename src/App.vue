@@ -2,6 +2,7 @@
 <div id="main">
   <nav>
     <h1><router-link :to="{name:'Home'}">Twoot</router-link></h1>
+    <div v-if="user">{{user.username}}</div>
   </nav>
   <router-view/>
 </div>
@@ -9,9 +10,19 @@
 
 "
 <script>
+import {computed} from 'vue';
+import {useStore} from 'vuex';
 
 export default {
   name: 'App',
+
+  setup() {
+    const store = useStore();
+    const user = computed(() => store.state.user);
+    return {
+      user
+    }
+  }
 }
 </script>
 
@@ -32,6 +43,10 @@ nav {
   background: lightskyblue;
   color: white;
   margin-bottom: 60px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
 }
 
 nav h1 {
@@ -42,5 +57,10 @@ nav h1 {
 nav h1 a  {
   color: inherit;
   text-decoration: none;
+}
+
+nav div {
+  margin-top: 40px;
+  margin-right: 20px;
 }
 </style>
